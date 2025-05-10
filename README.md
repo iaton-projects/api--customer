@@ -33,7 +33,7 @@ Collection estão na raiz do repositório.
 
 
 ```
-api--customer.postman_collection.json
+api--customer-user.postman_collection.json
 ```
 
 
@@ -48,6 +48,36 @@ Para rodar, vá na pasta target onde tem o artefato gerado e execute o comando:
 java -jar api--customer-user-0.0.1-SNAPSHOT.jar
 ```
 
+## Rodando via Docker (Precisa ter o Docker Instalado)
+
+Rodando via docker-compose
+
+Para criar o banco de dados postgresql, execute o comando abaixo:
+
+```
+docker-compose up
+```
+
+Execute o comando para gerar a imagem via Docker
+
+```
+docker build -t api--customer-user .
+```
+
+Para executar o container, rode o comando abaixo:
+
+```
+docker run --name api--customer-user \
+      --network iaquant-network \  
+      -p 5000:5000 \
+      -e SPRING_PROFILES_ACTIVE=dev,jsonlog,logbook
+      -e POSTGRES_HOST=<IP DO BANCO>
+      -e POSTGRES_DATABASE=<DATABASE DO BANCO>
+      -e POSTGRES_USERNAME=<USUARIO DE BANCO>
+      -e POSTGRES_PASSWORD=<SENHA DO BANCO>
+      api--customer-user:latest
+      
+```
 
 
 * **Clayton Morais de Oliveira**
