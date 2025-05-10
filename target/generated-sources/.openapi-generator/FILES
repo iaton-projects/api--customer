@@ -1,9 +1,0 @@
-src/main/java/br/com/iaquant/api/customer/user/openapi/controller/ApiUtil.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/controller/CustomerApi.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/AddressRequest.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/AddressResponse.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/CustomerRequest.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/CustomerResponse.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/StatusResponse.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/UserRequest.java
-src/main/java/br/com/iaquant/api/customer/user/openapi/model/domain/UserResponse.java
