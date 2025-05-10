@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: br.com.iaquant.api.customer.user.usecase.CustomerUseCaseTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.747 s -- in br.com.iaquant.api.customer.user.usecase.CustomerUseCaseTest

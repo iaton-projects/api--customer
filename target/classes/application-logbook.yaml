@@ -1,0 +1,11 @@
+logging:
+  level:
+    org:
+      zalando:
+        logbook: TRACE
+
+logbook:
+  format:
+    style: json
+    json:
+      condition: true

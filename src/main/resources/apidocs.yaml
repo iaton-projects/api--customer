@@ -1,0 +1,266 @@
+openapi: 3.0.2
+info:
+  title: api--customer-user
+  version: 1.0.0
+  description: Api responsavel por manter os dados do Cliente
+paths:
+  /api/customer/username/{username}:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+          description: SUCESSO
+      operationId: getCustomerByUsername
+      summary: Obtém as informações
+      description: Obtém as informações
+    parameters:
+      -
+        name: username
+        description: Identificador do elemento
+        schema:
+          type: string
+        in: path
+        required: true
+  /api/customer/save:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      tags:
+        - Customer
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: SUCESSO
+      operationId: saveCustomer
+      summary: Salva as informações
+      description: Salva as informações
+  /api/customer/email/{email}:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+          description: SUCESSO
+      operationId: getCustomerByEmail
+      summary: Obtém as informações
+      description: Obtém as informações
+    parameters:
+      -
+        name: email
+        description: Identificador do elemento
+        schema:
+          type: string
+        in: path
+        required: true
+components:
+  schemas:
+    StatusResponse:
+      title: Root Type for StatusResponse
+      description: ''
+      type: object
+      properties:
+        code:
+          format: int32
+          type: integer
+        description:
+          type: string
+      example:
+        code: 0
+        description: SUCESSO
+    AddressResponse:
+      title: Root Type for AddressResponse
+      description: ''
+      type: object
+      properties:
+        id:
+          type: integer
+        zipcode:
+          type: string
+        address:
+          type: string
+        neighborhood:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        number:
+          type: string
+        complement:
+          type: string
+      example:
+        id: 1
+        zipcode: '223322'
+        address: 123 Main St
+        neighborhood: Central
+        city: Springfield
+        state: IL
+        number: '20'
+        complement: CASA
+    AddressRequest:
+      title: Root Type for AddressResponse
+      description: ''
+      type: object
+      properties:
+        id:
+          type: integer
+        zipcode:
+          type: string
+        address:
+          type: string
+        neighborhood:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        number:
+          type: string
+        complement:
+          type: string
+      example:
+        id: 1
+        zipcode: '223322'
+        address: 123 Main St
+        neighborhood: Central
+        city: Springfield
+        state: IL
+        number: '20'
+        complement: CASA
+    CustomerRequest:
+      title: Root Type for CustomerRequest
+      description: ''
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        taxId:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        gender:
+          type: string
+        birthDate:
+          format: date
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressResponse'
+        user:
+          $ref: '#/components/schemas/UserResponse'
+      example:
+        id: 1
+        name: Joana Dark
+        taxId: '12345678900'
+        email: joana.dark@email.com
+        phone: '2133448866'
+        gender: female
+        birthDate: '2000-02-01'
+        user:
+          id: 1
+          username: user
+          password: password
+        address:
+          id: 1
+          zipcode: '12345'
+          address: 123 Main St
+          neighborhood: Central
+          city: Springfield
+          state: IL
+          number: '10'
+          complement: CASA
+    CustomerResponse:
+      title: Root Type for CustomerRequest
+      description: ''
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        taxId:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        gender:
+          type: string
+        birthDate:
+          format: date
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressResponse'
+        user:
+          $ref: '#/components/schemas/UserResponse'
+      example:
+        id: 1
+        name: Joana Dark
+        taxId: '12345678900'
+        email: joana.dark@email.com
+        phone: '2133448866'
+        gender: female
+        birthDate: '2000-02-01'
+        user:
+          id: 1
+          username: user
+          password: password
+        address:
+          id: 1
+          zipcode: '12345'
+          address: 123 Main St
+          neighborhood: Central
+          city: Springfield
+          state: IL
+          number: '10'
+          complement: CASA
+    UserRequest:
+      title: Root Type for UserRequest
+      description: ''
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        id: 1
+        username: user
+        password: password
+    UserResponse:
+      title: Root Type for UserRequest
+      description: ''
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        id: 1
+        username: user
+        password: password

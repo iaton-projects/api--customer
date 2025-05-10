@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16.1
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - iaquant-network
+
+volumes:
+  postgres_data:
+
+networks:
+  iaquant-network:
+    name: iaquant-network
+    driver: bridge

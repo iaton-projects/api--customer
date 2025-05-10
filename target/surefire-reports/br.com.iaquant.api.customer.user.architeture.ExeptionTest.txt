@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: br.com.iaquant.api.customer.user.architeture.ExeptionTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in br.com.iaquant.api.customer.user.architeture.ExeptionTest
