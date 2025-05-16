@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  */
 
 @Schema(name = "AddressRequest", description = "")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-06T23:59:29.610610300-03:00[America/Sao_Paulo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-16T04:22:35.551979300-03:00[America/Sao_Paulo]")
 public class AddressRequest {
 
   private Integer id;

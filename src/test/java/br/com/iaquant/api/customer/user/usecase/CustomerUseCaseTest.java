@@ -4,22 +4,18 @@ package br.com.iaquant.api.customer.user.usecase;
 import br.com.iaquant.api.customer.user.entity.Address;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.entity.User;
-import br.com.iaquant.api.customer.user.exception.ElementNotFoundException;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-class CustomerUseCaseTest extends AbstractUseCaseTest {
+class CustomerUseCaseTest {
 
     @Mock
     private CustomerRepository customerRepository;
@@ -27,36 +23,18 @@ class CustomerUseCaseTest extends AbstractUseCaseTest {
     @InjectMocks
     private CustomerUseCase customerUseCase;
 
-    @BeforeEach
-    void setup() {
-        customerUseCase = setupUseCaseTest(customerUseCase);
-    }
-
-
     @Test
     void shouldFindCustomerByEmailSuccess() {
-        when(customerRepository.findByEmail(anyString())).thenReturn(Optional.of(getCustomer()));
+        when(customerRepository.findByEmail(anyString())).thenReturn(getCustomer());
         var customer = customerUseCase.findByEmail("email@email.com");
         assertNotNull(customer);
     }
 
     @Test
-    void shouldThrow_ElementNotFoundException_CustomerByEmailNull() {
-        when(customerRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        assertThrows(ElementNotFoundException.class, () -> customerUseCase.findByEmail("email@email.com"));
-    }
-
-    @Test
     void shouldFindCustomerByUsernameSuccess() {
-        when(customerRepository.findByUserUsername(anyString())).thenReturn(Optional.of(getCustomer()));
+        when(customerRepository.findByUsername(anyString())).thenReturn(getCustomer());
         var customer = customerUseCase.findByUsername("usuario");
         assertNotNull(customer);
-    }
-
-    @Test
-    void shouldThrow_ElementNotFoundException_CustomerByUsernameNull() {
-        when(customerRepository.findByUserUsername(anyString())).thenReturn(Optional.empty());
-        assertThrows(ElementNotFoundException.class, () -> customerUseCase.findByUsername("usuario"));
     }
 
     @Test

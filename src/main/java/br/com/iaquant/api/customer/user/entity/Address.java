@@ -1,13 +1,7 @@
 package br.com.iaquant.api.customer.user.entity;
 
-import jakarta.persistence.*;
-
-@Entity
 public class Address {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
-        @SequenceGenerator(name = "address_seq", sequenceName = "address_seq", allocationSize = 1)
         Long id;
         String zipCode;
         String address;

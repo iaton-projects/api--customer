@@ -15,12 +15,14 @@ class HexagonalTest {
             .layer("Controller").definedBy("..controller..")
             .layer("UseCase").definedBy("..usecase..")
             .layer("Repository").definedBy("..repository..")
+            .layer("DataSource").definedBy("..datasource..")
             .layer("Mapper").definedBy("..mapper..")
             .layer("Entities").definedBy("..entity..")
             .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
-            .whereLayer("Config").mayOnlyBeAccessedByLayers("Controller", "UseCase")
-            .whereLayer("Mapper").mayOnlyBeAccessedByLayers("Controller")
+            .whereLayer("Config").mayOnlyBeAccessedByLayers("Controller", "UseCase","DataSource")
+            .whereLayer("Mapper").mayOnlyBeAccessedByLayers("Controller","DataSource")
             .whereLayer("UseCase").mayOnlyBeAccessedByLayers("Controller", "Config")
-            .whereLayer("Repository").mayOnlyBeAccessedByLayers("UseCase");
+            .whereLayer("Repository").mayOnlyBeAccessedByLayers("UseCase","DataSource")
+            .whereLayer("DataSource").mayOnlyBeAccessedByLayers("Repository","Mapper");
 
 }
