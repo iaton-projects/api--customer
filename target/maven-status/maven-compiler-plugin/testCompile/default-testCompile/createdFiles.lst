@@ -1,9 +1,0 @@
-br\com\iaquant\api\customer\user\architeture\HexagonalTest.class
-br\com\iaquant\api\customer\user\ApplicationTests.class
-br\com\iaquant\api\customer\user\architeture\ContractFirstTest.class
-br\com\iaquant\api\customer\user\controller\CustomerTableApiImplTest.class
-br\com\iaquant\api\customer\user\architeture\ContractFirstTest$1.class
-br\com\iaquant\api\customer\user\datasource\AbstractDataSourceTest.class
-br\com\iaquant\api\customer\user\datasource\CustomerDataSourceTest.class
-br\com\iaquant\api\customer\user\architeture\ExeptionTest.class
-br\com\iaquant\api\customer\user\usecase\CustomerUseCaseTest.class
