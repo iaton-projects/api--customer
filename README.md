@@ -61,13 +61,13 @@ docker-compose up
 Execute o comando para gerar a imagem via Docker
 
 ```
-docker build -t api--customer-userTable .
+docker build -t api--customer-user .
 ```
 
 Para executar o container, rode o comando abaixo:
 
 ```
-docker run --name api--customer-userTable \
+docker run --name api--customer-user \
       --network iaquant-network \  
       -p 5000:5000 \
       -e SPRING_PROFILES_ACTIVE=dev,jsonlog,logbook
@@ -75,7 +75,7 @@ docker run --name api--customer-userTable \
       -e POSTGRES_DATABASE=<DATABASE DO BANCO>
       -e POSTGRES_USERNAME=<USUARIO DE BANCO>
       -e POSTGRES_PASSWORD=<SENHA DO BANCO>
-      api--customer-userTable:latest
+      api--customer-user:latest
       
 ```
 
