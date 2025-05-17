@@ -17,7 +17,9 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,10 +29,10 @@ import static org.mockito.Mockito.*;
 class CustomerDataSourceTest extends AbstractDataSourceTest {
 
     @Mock
-    private CustomerPostgresRepository customerRepository;
+    private CustomerPostgresRepository customerPostgresRepository;
 
     @Spy
-    CustomerPostgresMapperImpl customerMapper;
+    CustomerPostgresMapperImpl customerPostgresMapper;
 
     @InjectMocks
     private CustomerDataSource customerDataSource;
@@ -40,37 +42,56 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
         customerDataSource = setupDataSourceTest(customerDataSource);
     }
 
+    @Test
+    void shouldFindCustomerByIdSuccess() {
+
+        for (Method m : customerPostgresRepository.getClass().getMethods()) {
+            if (m.getName().equals("findById")) {
+                System.out.println(m + " retorna " + m.getReturnType());
+            }
+        }
+
+        when(customerPostgresRepository.findById(anyLong())).thenReturn(Optional.of(getCustomer()));
+        var customer = customerDataSource.findCustomerById(1L);
+        assertNotNull(customer);
+    }
+
+    @Test
+    void shouldThrow_ElementNotFoundException_CustomerByIdNull() {
+        when(customerPostgresRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(ElementNotFoundException.class, () -> customerDataSource.findCustomerById(1L));
+    }
 
     @Test
     void shouldFindCustomerByEmailSuccess() {
-        when(customerRepository.findByEmail(anyString())).thenReturn(getCustomer());
-        var customer = customerDataSource.findByEmail("email@email.com");
+        when(customerPostgresRepository.findByEmail(anyString())).thenReturn(getCustomer());
+        var customer = customerDataSource.findCustomerByEmail("email@email.com");
         assertNotNull(customer);
     }
 
     @Test
     void shouldThrow_ElementNotFoundException_CustomerByEmailNull() {
-        when(customerRepository.findByEmail(anyString())).thenReturn(null);
-        assertThrows(ElementNotFoundException.class, () -> customerDataSource.findByEmail("email@email.com"));
+        when(customerPostgresRepository.findByEmail(anyString())).thenReturn(null);
+        assertThrows(ElementNotFoundException.class, () -> customerDataSource.findCustomerByEmail("email@email.com"));
     }
 
     @Test
     void shouldFindCustomerByUsernameSuccess() {
-        when(customerRepository.findByUserUsername(anyString())).thenReturn(getCustomer());
-        var customer = customerDataSource.findByUsername("usuario");
+        when(customerPostgresRepository.findByUserUsername(anyString())).thenReturn(getCustomer());
+        var customer = customerDataSource.findCustomerByUsername("usuario");
         assertNotNull(customer);
     }
 
     @Test
     void shouldThrow_ElementNotFoundException_CustomerByUsernameNull() {
-        when(customerRepository.findByUserUsername(anyString())).thenReturn(null);
-        assertThrows(ElementNotFoundException.class, () -> customerDataSource.findByUsername("usuario"));
+        when(customerPostgresRepository.findByUserUsername(anyString())).thenReturn(null);
+        assertThrows(ElementNotFoundException.class, () -> customerDataSource.findCustomerByUsername("usuario"));
     }
 
     @Test
     void shouldSaveCustomerSuccess() {
         customerDataSource.save(new Customer());
-        verify(customerRepository, times(1)).save(any(CustomerTable.class));
+        verify(customerPostgresRepository, times(1)).save(any(CustomerTable.class));
     }
 
     private static CustomerTable getCustomer() {

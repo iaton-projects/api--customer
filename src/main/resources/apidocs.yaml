@@ -4,6 +4,28 @@ info:
   version: 1.0.0
   description: Api responsavel por manter os dados do Cliente
 paths:
+  /api/customer/{id}:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+          description: SUCESSO
+      operationId: getCustomerById
+      summary: Obtém as informações
+      description: Obtém as informações
+    parameters:
+      -
+        name: id
+        description: Identificador do elemento
+        schema:
+          type: number
+        in: path
+        required: true
   /api/customer/username/{username}:
     get:
       tags:
@@ -21,6 +43,28 @@ paths:
     parameters:
       -
         name: username
+        description: Identificador do elemento
+        schema:
+          type: string
+        in: path
+        required: true
+  /api/customer/email/{email}:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+          description: SUCESSO
+      operationId: getCustomerByEmail
+      summary: Obtém as informações
+      description: Obtém as informações
+    parameters:
+      -
+        name: email
         description: Identificador do elemento
         schema:
           type: string
@@ -45,28 +89,6 @@ paths:
       operationId: saveCustomer
       summary: Salva as informações
       description: Salva as informações
-  /api/customer/email/{email}:
-    get:
-      tags:
-        - Customer
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomerResponse'
-          description: SUCESSO
-      operationId: getCustomerByEmail
-      summary: Obtém as informações
-      description: Obtém as informações
-    parameters:
-      -
-        name: email
-        description: Identificador do elemento
-        schema:
-          type: string
-        in: path
-        required: true
 components:
   schemas:
     StatusResponse:

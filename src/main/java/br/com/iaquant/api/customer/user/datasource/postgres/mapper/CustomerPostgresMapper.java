@@ -5,9 +5,15 @@ import br.com.iaquant.api.customer.user.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
+import java.util.Optional;
+
 @Mapper(componentModel= MappingConstants.ComponentModel.SPRING)
 public interface CustomerPostgresMapper {
     CustomerTable map(Customer customer);
 
     Customer map(CustomerTable customerTable);
+
+    default Customer map(Optional<CustomerTable> customerTableOptional) {
+        return map(customerTableOptional.orElse(null));
+    }
 }

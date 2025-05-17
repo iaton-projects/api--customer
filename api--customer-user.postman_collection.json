@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "1b383723-2381-4f8c-baef-e364681f1be7",
+		"name": "api--customer-user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17710409",
+		"_collection_link": "https://ton000-9325.postman.co/workspace/Ton-Workspace~2eff75ed-d00a-4740-82f4-84ef384d7e1e/collection/17710409-1b383723-2381-4f8c-baef-e364681f1be7?action=share&source=collection_link&creator=17710409"
+	},
+	"item": [
+		{
+			"name": "/api/customer/save",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"Clayton Morais de Oliveira\",\r\n    \"email\": \"claytonmorais@gmail.com\",\r\n    \"user\": {\r\n        \"id\": 2,\r\n        \"username\": \"claytonmorais@gmail.com\",\r\n        \"password\": \"123456\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api--customer-user/api/customer/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api--customer-user",
+						"api",
+						"customer",
+						"save"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:5000/customers \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"age\": 30\r\n}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/customer/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api--customer-user/api/customer/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api--customer-user",
+						"api",
+						"customer",
+						"1"
+					]
+				},
+				"description": "Generated from cURL: curl -X DELETE http://localhost:5000/customers/1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/customer/email/:email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api--customer-user/api/customer/email/claytonmorais@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api--customer-user",
+						"api",
+						"customer",
+						"email",
+						"claytonmorais@gmail.com"
+					]
+				},
+				"description": "Generated from cURL: curl -X DELETE http://localhost:5000/customers/1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/customer/username/:username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api--customer-user/api/customer/username/claytonmorais",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api--customer-user",
+						"api",
+						"customer",
+						"username",
+						"claytonmorais"
+					]
+				},
+				"description": "Generated from cURL: curl -X DELETE http://localhost:5000/customers/1\r\n"
+			},
+			"response": []
+		}
+	]
+}

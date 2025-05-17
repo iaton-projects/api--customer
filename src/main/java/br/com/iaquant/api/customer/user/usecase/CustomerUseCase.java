@@ -20,12 +20,17 @@ public class CustomerUseCase {
         return new Status(0,"SUCESSO");
     }
 
-    public Customer findByEmail(String email) {
-        return customerRepository.findByEmail(email);
+    public Customer findCustomerById(Long id) {
+        return customerRepository.findCustomerById(id);
     }
 
-    public Customer findByUsername(String username) {
-        return customerRepository.findByUsername(username);
+
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
+    }
+
+    public Customer findCustomerByUsername(String username) {
+        return customerRepository.findCustomerByUsername(username);
     }
 
 }

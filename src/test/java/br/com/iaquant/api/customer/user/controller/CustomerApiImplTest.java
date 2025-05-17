@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-class CustomerTableApiImplTest {
+class CustomerApiImplTest {
 
 
 
@@ -54,10 +54,37 @@ class CustomerTableApiImplTest {
                 .build();
     }
 
+    @Test
+    void shouldReturnHttp200_GetCustomerById() throws Exception {
+        when(customerUseCase.findCustomerById(anyLong())).thenReturn(getCustomer());
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/api/customer/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
+
+    @Test
+    void shouldReturnHttp404_GetCustomerById() throws Exception {
+        when(customerUseCase.findCustomerById(anyLong())).thenThrow(new ElementNotFoundException("ERRO"));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/api/customer/id/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isNotFound());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
 
     @Test
      void shouldReturnHttp200_GetCustomerByEmail() throws Exception {
-        when(customerUseCase.findByEmail(anyString())).thenReturn(getCustomer());
+        when(customerUseCase.findCustomerByEmail(anyString())).thenReturn(getCustomer());
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/email/{email}", "email@email.com")
@@ -71,7 +98,7 @@ class CustomerTableApiImplTest {
 
     @Test
      void shouldReturnHttp404_GetCustomerByEmail() throws Exception {
-        when(customerUseCase.findByEmail(anyString())).thenThrow(new ElementNotFoundException("ERRO"));
+        when(customerUseCase.findCustomerByEmail(anyString())).thenThrow(new ElementNotFoundException("ERRO"));
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/email/{email}", "email@email.com")
@@ -85,7 +112,7 @@ class CustomerTableApiImplTest {
 
     @Test
     void shouldReturnHttp200_GetCustomerByUsername() throws Exception {
-        when(customerUseCase.findByUsername(anyString())).thenReturn(getCustomer());
+        when(customerUseCase.findCustomerByUsername(anyString())).thenReturn(getCustomer());
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/username/{username}", "username")
@@ -99,7 +126,7 @@ class CustomerTableApiImplTest {
 
     @Test
     void shouldReturnHttp404_GetCustomerByUsername() throws Exception {
-        when(customerUseCase.findByUsername(anyString())).thenThrow(new ElementNotFoundException("ERRO"));
+        when(customerUseCase.findCustomerByUsername(anyString())).thenThrow(new ElementNotFoundException("ERRO"));
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/username/{username}", "username")

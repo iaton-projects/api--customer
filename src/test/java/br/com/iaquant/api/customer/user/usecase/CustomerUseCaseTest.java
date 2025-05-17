@@ -24,16 +24,23 @@ class CustomerUseCaseTest {
     private CustomerUseCase customerUseCase;
 
     @Test
+    void shouldFindCustomerByIdSuccess() {
+        when(customerRepository.findCustomerById(anyLong())).thenReturn(getCustomer());
+        var customer = customerUseCase.findCustomerById(1L);
+        assertNotNull(customer);
+    }
+
+    @Test
     void shouldFindCustomerByEmailSuccess() {
-        when(customerRepository.findByEmail(anyString())).thenReturn(getCustomer());
-        var customer = customerUseCase.findByEmail("email@email.com");
+        when(customerRepository.findCustomerByEmail(anyString())).thenReturn(getCustomer());
+        var customer = customerUseCase.findCustomerByEmail("email@email.com");
         assertNotNull(customer);
     }
 
     @Test
     void shouldFindCustomerByUsernameSuccess() {
-        when(customerRepository.findByUsername(anyString())).thenReturn(getCustomer());
-        var customer = customerUseCase.findByUsername("usuario");
+        when(customerRepository.findCustomerByUsername(anyString())).thenReturn(getCustomer());
+        var customer = customerUseCase.findCustomerByUsername("usuario");
         assertNotNull(customer);
     }
 

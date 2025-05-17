@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface CustomerPostgresRepository extends JpaRepository<CustomerTable, Long> {
     CustomerTable findByEmail(String email);
 
-
-
     CustomerTable findByUserUsername(String username);
+
 }
 

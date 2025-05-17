@@ -2,12 +2,15 @@ package br.com.iaquant.api.customer.user.datasource;
 
 import br.com.iaquant.api.customer.user.aspect.ObjectReturnType;
 import br.com.iaquant.api.customer.user.aspect.ReturnNullObject;
+import br.com.iaquant.api.customer.user.datasource.postgres.entity.CustomerTable;
 import br.com.iaquant.api.customer.user.datasource.postgres.mapper.CustomerPostgresMapper;
 import br.com.iaquant.api.customer.user.datasource.postgres.repository.CustomerPostgresRepository;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomerDataSource implements CustomerRepository {
@@ -28,12 +31,18 @@ public class CustomerDataSource implements CustomerRepository {
 
 
     @ReturnNullObject(ObjectReturnType.OBJECT)
-    public Customer findByEmail(String email) {
+    public Customer findCustomerByEmail(String email) {
         return customerPostgresMapper.map(customerPostgresRepository.findByEmail(email));
     }
 
     @ReturnNullObject(ObjectReturnType.OBJECT)
-    public Customer findByUsername(String username) {
+    public Customer findCustomerByUsername(String username) {
         return customerPostgresMapper.map(customerPostgresRepository.findByUserUsername(username));
+    }
+
+    @ReturnNullObject(ObjectReturnType.OBJECT)
+    public Customer findCustomerById(Long id) {
+        Optional<CustomerTable> customerTableOptional = customerPostgresRepository.findById(id);
+        return customerPostgresMapper.map(customerTableOptional);
     }
 }

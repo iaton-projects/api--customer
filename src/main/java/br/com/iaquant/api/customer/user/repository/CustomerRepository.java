@@ -3,10 +3,14 @@ package br.com.iaquant.api.customer.user.repository;
 import br.com.iaquant.api.customer.user.entity.Customer;
 
 public interface CustomerRepository {
-    Customer findByEmail(String email);
+    Customer findCustomerByEmail(String email);
 
-    Customer findByUsername(String username);
+    Customer findCustomerByUsername(String username);
+
+    Customer findCustomerById(Long id);
 
     void save(Customer customer);
+
+
 }
 
