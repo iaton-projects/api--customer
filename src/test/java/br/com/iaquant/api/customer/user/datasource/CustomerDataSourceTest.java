@@ -44,13 +44,6 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
 
     @Test
     void shouldFindCustomerByIdSuccess() {
-
-        for (Method m : customerPostgresRepository.getClass().getMethods()) {
-            if (m.getName().equals("findById")) {
-                System.out.println(m + " retorna " + m.getReturnType());
-            }
-        }
-
         when(customerPostgresRepository.findById(anyLong())).thenReturn(Optional.of(getCustomer()));
         var customer = customerDataSource.findCustomerById(1L);
         assertNotNull(customer);
