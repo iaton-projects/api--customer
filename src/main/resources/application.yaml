@@ -78,3 +78,7 @@ management:
     sampling:
       probability: 0.1
 
+security:
+  apiKey: "MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh"
+#UUID: 2e2a5c4d-85b7-43d6-a07b-56ea534c6a4a
+#Base64: MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh
