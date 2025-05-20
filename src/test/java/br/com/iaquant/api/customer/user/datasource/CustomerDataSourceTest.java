@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -83,7 +82,8 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
 
     @Test
     void shouldSaveCustomerSuccess() {
-        customerDataSource.save(new Customer());
+        var customerSaved = customerDataSource.save(new Customer());
+        assertNotNull(customerSaved);
         verify(customerPostgresRepository, times(1)).save(any(CustomerTable.class));
     }
 

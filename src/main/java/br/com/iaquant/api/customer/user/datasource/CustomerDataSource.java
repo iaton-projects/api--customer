@@ -25,8 +25,11 @@ public class CustomerDataSource implements CustomerRepository {
     }
 
     @Transactional
-    public void save(Customer customer) {
-        customerPostgresRepository.save(customerPostgresMapper.map(customer));
+    public Customer save(Customer customer) {
+        var customerTable = customerPostgresMapper.map(customer);
+        customerPostgresRepository.save(customerTable);
+        return customerPostgresMapper.map(customerTable);
+
     }
 
 

@@ -1,0 +1,9 @@
+@namespace("br.com.iaquant.service.notification.avro")
+protocol NotificationAvroIDL {
+
+	record NotificationAvro {
+		long idCustomer;
+		array<string> typeTemplates;
+		map<string> attributes;
+	}
+}

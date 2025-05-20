@@ -9,7 +9,7 @@ public interface CustomerRepository {
 
     Customer findCustomerById(Long id);
 
-    void save(Customer customer);
+    Customer save(Customer customer);
 
 
 }

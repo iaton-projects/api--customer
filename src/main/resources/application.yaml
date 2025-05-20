@@ -38,12 +38,21 @@ spring:
     tomcat:
       max-active: ${SPRING_DATASOURCE_MAX_ACTIVE:10}
 
+kafka:
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+  schemaRegistry: ${KAFKA_SCHEMA_REGISTRY:http://localhost:8081}
+  retryMaxAttempts: 3
+  notification:
+    topic: kfk-notification
+    groupId: grp-notification
+
+
 server:
   max-http-request-size: 60000
   shutdown: graceful
   servlet:
     context-path: /api--customer-user
-  port: 5000
+  port: 5100
 
 info:
   app:

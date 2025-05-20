@@ -11,12 +11,16 @@ public class CustomerUseCase {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerUseCase(CustomerRepository customerRepository) {
+    private final NotificationUseCase notificationUseCase;
+
+    public CustomerUseCase(CustomerRepository customerRepository, NotificationUseCase notificationUseCase) {
         this.customerRepository = customerRepository;
+        this.notificationUseCase = notificationUseCase;
     }
 
     public Status save(Customer customer) {
-        customerRepository.save(customer);
+        var customerSaved = customerRepository.save(customer);
+        notificationUseCase.sendNotification(customerSaved);
         return new Status(0,"SUCESSO");
     }
 

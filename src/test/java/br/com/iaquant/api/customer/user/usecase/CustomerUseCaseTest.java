@@ -3,6 +3,7 @@ package br.com.iaquant.api.customer.user.usecase;
 
 import br.com.iaquant.api.customer.user.entity.Address;
 import br.com.iaquant.api.customer.user.entity.Customer;
+import br.com.iaquant.api.customer.user.entity.Status;
 import br.com.iaquant.api.customer.user.entity.User;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
@@ -18,10 +19,13 @@ import static org.mockito.Mockito.*;
 class CustomerUseCaseTest {
 
     @Mock
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
+
+    @Mock
+    NotificationUseCase notificationUseCase;
 
     @InjectMocks
-    private CustomerUseCase customerUseCase;
+    CustomerUseCase customerUseCase;
 
     @Test
     void shouldFindCustomerByIdSuccess() {
@@ -46,9 +50,12 @@ class CustomerUseCaseTest {
 
     @Test
     void shouldSaveCustomerSuccess() {
+        when(customerRepository.save(any(Customer.class))).thenReturn(new Customer().setId(1L));
+        when(notificationUseCase.sendNotification(any(Customer.class))).thenReturn(new Status(0, "SUCESSO"));
         var customer = getCustomer();
         var status = customerUseCase.save(customer);
         verify(customerRepository, times(1)).save(any(Customer.class));
+        verify(notificationUseCase, times(1)).sendNotification(any(Customer.class));
         assertNotNull(status);
     }
 
