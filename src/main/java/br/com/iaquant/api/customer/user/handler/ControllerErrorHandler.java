@@ -32,14 +32,14 @@ public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Status> handleListNotFound(ListNotFoundException exception, WebRequest request) {
         var status = new Status(HttpStatus.NO_CONTENT.value(), exception.getMessage());
         LOGGER.error(exception.getMessage());
-        return new ResponseEntity<Status>(status,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(status, HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(BusinessException.class)
     public final ResponseEntity<Status> handleBusinessError(BusinessException exception, WebRequest request) {
         var status = new Status(HttpStatus.EXPECTATION_FAILED.value(), exception.getMessage());
         LOGGER.error(exception.getMessage());
-        return new ResponseEntity<Status>(status,HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(status, HttpStatus.EXPECTATION_FAILED);
     }
 
 }
