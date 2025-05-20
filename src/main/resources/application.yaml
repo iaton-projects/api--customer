@@ -1,3 +1,10 @@
+server:
+  max-http-request-size: 60000
+  shutdown: graceful
+  servlet:
+    context-path: /api--customer-user
+  port: 5000
+
 spring:
   application:
     name: api--customer-user
@@ -46,14 +53,6 @@ kafka:
     topic: kfk-notification
     groupId: grp-notification
 
-
-server:
-  max-http-request-size: 60000
-  shutdown: graceful
-  servlet:
-    context-path: /api--customer-user
-  port: 5100
-
 info:
   app:
     name: "@project.name@"
@@ -84,10 +83,16 @@ management:
           readiness:
             include: diskSpace
   tracing:
-    sampling:
-      probability: 0.1
+    baggage:
+      enabled: 'true'
+    propagation:
+      type: 'w3c '
+    enabled: 'true'
+  otlp:
+    tracing:
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/traces}
 
 security:
-  apiKey: "MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh"
+  apiKey: "${API_KEY_SECURITY:MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh}"
 #UUID: 2e2a5c4d-85b7-43d6-a07b-56ea534c6a4a
 #Base64: MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh
