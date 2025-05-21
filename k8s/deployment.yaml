@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api--customer-user-deployment
+  namespace: iaquant
+spec:
+  selector:
+    matchLabels:
+      app: api--customer-user
+  template: 
+    metadata:
+        name: api--customer-user
+        labels:
+          app: api--customer-user
+    spec:
+        containers:
+          - name: api--customer-user-container
+            image: $dck-accountid/$dck-repository:api--customer-user-$githash
+            envFrom:
+              - configMapRef:
+                  name: api--customer-user-cm
+            ports:
+              - containerPort: 5000
+              - containerPort: 9190
+            livenessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 9190
+              initialDelaySeconds: 120
+              periodSeconds: 60
+              timeoutSeconds: 10
+              successThreshold: 1
+              failureThreshold: 2
+            readinessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 9190
+              initialDelaySeconds: 120
+              periodSeconds: 10
+              timeoutSeconds: 10

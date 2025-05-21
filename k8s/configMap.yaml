@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api--customer-user-cm
+  namespace: iaquant
+data:
+  SPRING_PROFILES_ACTIVE: "dev,jsonlog,logbook"
+  API_KEY_SECURITY: "MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh"
+  KAFKA_BOOTSTRAP_SERVER: "kafka-broker.infra.svc.local:9092"
+  KAFKA_SCHEMA_REGISTRY: "http://schema-registry.infra.svc.local:8081"
+  POSTGRES_DATABASE: "db"
+  POSTGRES_HOST: "postgres.infra.svc.local"
+  POSTGRES_PASSWORD: "password"
+  POSTGRES_USERNAME: "postgres"
+  SPRING_JPA_SHOW_SQL: "true"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger.infra.iaquant.svc.local:4318/v1/traces"
