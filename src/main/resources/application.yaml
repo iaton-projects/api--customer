@@ -84,13 +84,15 @@ management:
             include: diskSpace
   tracing:
     baggage:
-      enabled: 'true'
+      enabled: true
     propagation:
-      type: 'w3c '
-    enabled: 'true'
+      type: 'w3c'
+    enabled: true
   otlp:
     tracing:
       endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/traces}
+  observations:
+    enabled: true
 
 security:
   apiKey: "${API_KEY_SECURITY:MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh}"
