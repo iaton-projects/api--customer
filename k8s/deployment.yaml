@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api--customer-user-deployment
+  name: api--customer-user
   namespace: iaquant
 spec:
   selector:
@@ -14,7 +14,7 @@ spec:
           app: api--customer-user
     spec:
         containers:
-          - name: api--customer-user-container
+          - name: api--customer-user
             image: $dck-accountid/$dck-repository:api--customer-user-$githash
             envFrom:
               - configMapRef:
