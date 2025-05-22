@@ -23,7 +23,7 @@ public class NotificationUseCase {
 
         var notification = new Notification()
                 .setIdCustomer(customer.getId())
-                .setAttributes(Map.of("nome",customer.getName()))
+                .setAttributes(Map.of("nome",customer.getFirstName()+customer.getLastName()))
                         .setTypeTemplates(Arrays.asList("PAYMENT_APPROVED_EMAIL"));
 
 

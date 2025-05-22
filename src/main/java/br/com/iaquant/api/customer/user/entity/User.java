@@ -1,9 +1,9 @@
 package br.com.iaquant.api.customer.user.entity;
 
 public class User{
-        Long id;
-        String username;
-        String password;
+        private Long id;
+        private String username;
+        private String password;
 
         public Long getId() {
                 return id;

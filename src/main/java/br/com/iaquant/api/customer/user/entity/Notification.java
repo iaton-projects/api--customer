@@ -6,8 +6,8 @@ import java.util.Map;
 public class Notification {
 
     private Long idCustomer;
-    List<String> typeTemplates;
-    Map<String,String> attributes;
+    private List<String> typeTemplates;
+    private Map<String, String> attributes;
 
     public Long getIdCustomer() {
         return idCustomer;

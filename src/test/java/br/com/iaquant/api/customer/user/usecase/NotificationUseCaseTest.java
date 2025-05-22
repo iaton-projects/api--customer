@@ -24,7 +24,7 @@ class NotificationUseCaseTest {
 
     @Test
     void shouldSendNotificationSuccess() {
-        var customer = notificationUseCase.sendNotification(new Customer().setId(1L).setName("name"));
+        var customer = notificationUseCase.sendNotification(new Customer().setId(1L).setFirstName("name").setLastName("last name"));
         verify(notificationRepository, times(1)).sendNotification(any(Notification.class));
         assertNotNull(customer);
     }

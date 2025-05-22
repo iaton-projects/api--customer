@@ -1,101 +1,108 @@
 package br.com.iaquant.api.customer.user.entity;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
-public class Customer{
+public class Customer {
 
-        Long id;
-        String name;
-        String email;
-        String phone;
-        String taxId;
-        LocalDate birthDate;
-        String gender;
-        @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "user_id", referencedColumnName = "id")
-        User user;
-        @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "address_id", referencedColumnName = "id")
-        Address address;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String taxId;
+    private LocalDate birthDate;
+    private String gender;
+    private User user;
 
-        public Long getId() {
-                return id;
-        }
+    private Address address;
 
-        public Customer setId(Long id) {
-                this.id = id;
-                return this;
-        }
+    public Long getId() {
+        return id;
+    }
 
-        public String getName() {
-                return name;
-        }
+    public Customer setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
-        public Customer setName(String name) {
-                this.name = name;
-                return this;
-        }
+    public String getFirstName() {
+        return firstName;
+    }
 
-        public String getEmail() {
-                return email;
-        }
+    public Customer setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
 
-        public Customer setEmail(String email) {
-                this.email = email;
-                return this;
-        }
+    public String getLastName() {
+        return lastName;
+    }
 
-        public String getPhone() {
-                return phone;
-        }
+    public Customer setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
 
-        public Customer setPhone(String phone) {
-                this.phone = phone;
-                return this;
-        }
+    public String getEmail() {
+        return email;
+    }
 
-        public String getTaxId() {
-                return taxId;
-        }
+    public Customer setEmail(String email) {
+        this.email = email;
+        return this;
+    }
 
-        public Customer setTaxId(String taxId) {
-                this.taxId = taxId;
-                return this;
-        }
+    public String getPhone() {
+        return phone;
+    }
 
-        public LocalDate getBirthDate() {
-                return birthDate;
-        }
+    public Customer setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
 
-        public Customer setBirthDate(LocalDate birthDate) {
-                this.birthDate = birthDate;
-                return this;
-        }
+    public String getTaxId() {
+        return taxId;
+    }
 
-        public String getGender() {
-                return gender;
-        }
+    public Customer setTaxId(String taxId) {
+        this.taxId = taxId;
+        return this;
+    }
 
-        public Customer setGender(String gender) {
-                this.gender = gender;
-                return this;
-        }
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
-        public User getUser() {
-                return user;
-        }
+    public Customer setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+        return this;
+    }
 
-        public Customer setUser(User user) {
-                this.user = user;
-                return this;
-        }
+    public String getGender() {
+        return gender;
+    }
 
-        public Address getAddress() {
-                return address;
-        }
+    public Customer setGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
 
-        public Customer setAddress(Address address) {
-                this.address = address;
-                return this;
-        }
+    public User getUser() {
+        return user;
+    }
+
+    public Customer setUser(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public Customer setAddress(Address address) {
+        this.address = address;
+        return this;
+    }
 }

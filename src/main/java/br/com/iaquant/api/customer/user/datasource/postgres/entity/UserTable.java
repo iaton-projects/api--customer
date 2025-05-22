@@ -8,9 +8,9 @@ public class UserTable {
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
         @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
-        Long id;
-        String username;
-        String password;
+        private Long id;
+        private String username;
+        private String password;
 
         public Long getId() {
                 return id;

@@ -171,7 +171,9 @@ components:
       properties:
         id:
           type: integer
-        name:
+        firstName:
+          type: string
+        lastName:
           type: string
         taxId:
           type: string
@@ -190,7 +192,8 @@ components:
           $ref: '#/components/schemas/UserResponse'
       example:
         id: 1
-        name: Joana Dark
+        firstName: Joana
+        lastName: Dark
         taxId: '12345678900'
         email: joana.dark@email.com
         phone: '2133448866'
@@ -216,7 +219,9 @@ components:
       properties:
         id:
           type: integer
-        name:
+        firstName:
+          type: string
+        lastName:
           type: string
         taxId:
           type: string
@@ -235,7 +240,8 @@ components:
           $ref: '#/components/schemas/UserResponse'
       example:
         id: 1
-        name: Joana Dark
+        firstName: Joana
+        lastName: Dark
         taxId: '12345678900'
         email: joana.dark@email.com
         phone: '2133448866'

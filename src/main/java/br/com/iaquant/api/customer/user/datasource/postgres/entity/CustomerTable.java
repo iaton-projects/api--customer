@@ -10,17 +10,18 @@ public class CustomerTable {
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
         @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq", allocationSize = 1)
-        Long id;
-        String name;
-        String email;
-        String phone;
-        String taxId;
-        LocalDate birthDate;
-        String gender;
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private String taxId;
+        private LocalDate birthDate;
+        private String gender;
         @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "user_id", referencedColumnName = "id")
-        UserTable user;
+        private UserTable user;
         @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "address_id", referencedColumnName = "id")
-        AddressTable address;
+        private AddressTable address;
 
         public Long getId() {
                 return id;
@@ -31,12 +32,21 @@ public class CustomerTable {
                 return this;
         }
 
-        public String getName() {
-                return name;
+        public String getFirstName() {
+                return firstName;
         }
 
-        public CustomerTable setName(String name) {
-                this.name = name;
+        public CustomerTable setFirstName(String firstName) {
+                this.firstName = firstName;
+                return this;
+        }
+
+        public String getLastName() {
+                return lastName;
+        }
+
+        public CustomerTable setLastName(String lastName) {
+                this.lastName = lastName;
                 return this;
         }
 

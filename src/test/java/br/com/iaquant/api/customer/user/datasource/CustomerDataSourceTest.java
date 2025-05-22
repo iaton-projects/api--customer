@@ -90,7 +90,8 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
     private static CustomerTable getCustomer() {
         return new CustomerTable()
                 .setId(1L)
-                .setName("John Doe")
+                .setFirstName("John")
+                .setLastName("Doe")
                 .setEmail("johndoe@example.com")
                 .setPhone("+55 21 98765-4321")
                 .setTaxId("123.456.789-00")

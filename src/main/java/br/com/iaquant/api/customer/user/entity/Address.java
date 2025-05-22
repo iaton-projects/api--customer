@@ -2,13 +2,13 @@ package br.com.iaquant.api.customer.user.entity;
 
 public class Address {
 
-        Long id;
-        String zipCode;
-        String address;
-        String neighborhood;
-        String city;
-        String state;
-        String complement;
+        private Long id;
+        private String zipCode;
+        private String address;
+        private String neighborhood;
+        private String city;
+        private String state;
+        private String complement;
 
         public Long getId() {
                 return id;
