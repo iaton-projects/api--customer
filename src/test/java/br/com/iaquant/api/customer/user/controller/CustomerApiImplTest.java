@@ -1,9 +1,7 @@
 package br.com.iaquant.api.customer.user.controller;
 
 import br.com.iaquant.api.customer.user.config.CustomerMetrics;
-import br.com.iaquant.api.customer.user.entity.Address;
-import br.com.iaquant.api.customer.user.entity.Customer;
-import br.com.iaquant.api.customer.user.entity.User;
+import br.com.iaquant.api.customer.user.entity.*;
 import br.com.iaquant.api.customer.user.exception.ElementNotFoundException;
 import br.com.iaquant.api.customer.user.exception.ListNotFoundException;
 import br.com.iaquant.api.customer.user.handler.ControllerErrorHandler;
@@ -11,7 +9,6 @@ import br.com.iaquant.api.customer.user.mapper.CustomerMapper;
 import br.com.iaquant.api.customer.user.openapi.model.domain.CustomerRequest;
 import br.com.iaquant.api.customer.user.openapi.model.domain.FilterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import br.com.iaquant.api.customer.user.entity.Status;
 import br.com.iaquant.api.customer.user.usecase.CustomerUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +59,6 @@ class CustomerApiImplTest {
 
     @Test
     void shouldReturnHttp200_ListCustomer() throws Exception {
-        when(customerUseCase.filter(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(getCustomer())));
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/list")
@@ -76,7 +72,7 @@ class CustomerApiImplTest {
 
     @Test
     void shouldReturnHttp204_ListCustomer() throws Exception {
-        when(customerUseCase.filter(any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
+        when(customerUseCase.listAll(any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/api/customer/list")
@@ -90,7 +86,7 @@ class CustomerApiImplTest {
 
     @Test
     void shouldReturnHttp200_FilterCustomer() throws Exception {
-        when(customerUseCase.filter(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(getCustomer())));
+        when(customerUseCase.filter(any(Filter.class), any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(getCustomer())));
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/customer/list")
@@ -103,11 +99,10 @@ class CustomerApiImplTest {
         verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
     }
 
-
-
     @Test
     void shouldReturnHttp204_FilterCustomer() throws Exception {
-        when(customerUseCase.filter(any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
+        when(customerUseCase.filter(any(Filter.class), any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
+        when(customerMapper.map(any(FilterRequest.class))).thenReturn(new Filter());
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/customer/list")

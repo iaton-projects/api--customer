@@ -1,6 +1,7 @@
 package br.com.iaquant.api.customer.user.usecase;
 
 import br.com.iaquant.api.customer.user.entity.Customer;
+import br.com.iaquant.api.customer.user.entity.Filter;
 import br.com.iaquant.api.customer.user.entity.Status;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,11 @@ public class CustomerUseCase {
         return new Status(0,"SUCESSO");
     }
 
-    public Page<Customer> filter(Pageable pageRequest) {
+    public Page<Customer> listAll(Pageable pageRequest) {
         return customerRepository.filter(pageRequest);
+    }
+
+    public Page<Customer> filter(Filter filter, Pageable pageRequest) {
+        return customerRepository.filter(filter, pageRequest);
     }
 }

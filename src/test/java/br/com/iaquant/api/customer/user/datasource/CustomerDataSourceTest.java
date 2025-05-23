@@ -8,6 +8,7 @@ import br.com.iaquant.api.customer.user.datasource.postgres.entity.UserTable;
 import br.com.iaquant.api.customer.user.datasource.postgres.mapper.CustomerPostgresMapperImpl;
 import br.com.iaquant.api.customer.user.datasource.postgres.repository.CustomerPostgresRepository;
 import br.com.iaquant.api.customer.user.entity.Customer;
+import br.com.iaquant.api.customer.user.entity.Filter;
 import br.com.iaquant.api.customer.user.exception.ElementNotFoundException;
 import br.com.iaquant.api.customer.user.exception.ListNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,11 +54,25 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
         assertEquals(1, pageList.getTotalPages());
     }
 
-
     @Test
-    void shouldThrow_ListNotFoundException_CustomerByIdNull() {
+    void shouldThrow_ListNotFoundException_FilterCustomerNull() {
         when(customerPostgresRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
         assertThrows(ListNotFoundException.class, () -> customerDataSource.filter(PageRequest.of(1, 5, Sort.by("firstName"))));
+    }
+
+    @Test
+    void shouldFilterCustomerFirstNameSuccess() {
+        when(customerPostgresRepository.findAllByFirstName(anyString(), any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
+        var pageList = customerDataSource.filter(getFilter(), PageRequest.of(1, 5, Sort.by("firstName")));
+        assertNotNull(pageList);
+        assertEquals(1, pageList.getTotalElements());
+        assertEquals(1, pageList.getTotalPages());
+    }
+
+    @Test
+    void shouldThrow_ListNotFoundException_FilterCustomerrFirstNameNull() {
+        when(customerPostgresRepository.findAllByFirstName(anyString(), any(Pageable.class))).thenReturn(Page.empty());
+        assertThrows(ListNotFoundException.class, () -> customerDataSource.filter(getFilter(), PageRequest.of(1, 5, Sort.by("firstName"))));
     }
 
     @Test
@@ -110,6 +125,10 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
     void shouldDeleteCustomerSuccess() {
         customerDataSource.delete(1L);
         verify(customerPostgresRepository, times(1)).deleteById(any(Long.class));
+    }
+
+    private static Filter getFilter() {
+        return new Filter().setFilter("nome");
     }
 
     private static CustomerTable getCustomer() {

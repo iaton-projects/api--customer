@@ -5,9 +5,6 @@ import br.com.iaquant.api.customer.user.openapi.controller.CustomerApi;
 import br.com.iaquant.api.customer.user.openapi.model.domain.*;
 import br.com.iaquant.api.customer.user.mapper.CustomerMapper;
 import br.com.iaquant.api.customer.user.usecase.CustomerUseCase;
-import br.com.iaquant.api.customer.user.utils.Constants;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,12 +25,12 @@ public class CustomerApiImpl implements CustomerApi {
 
     @Override
     public ResponseEntity<ListCustomerResponse> listAllCustomer() {
-        return ResponseEntity.ok(customerMapper.map(customerUseCase.filter(PageRequest.of(0, Constants.NUMBER_PAGES, Sort.by(Constants.SORT_ATTRIBUTE)))));
+        return ResponseEntity.ok(customerMapper.map(customerUseCase.listAll(customerMapper.map(0))));
     }
 
     @Override
     public ResponseEntity<ListCustomerResponse> filterCustomer(FilterRequest filterRequest) {
-        return ResponseEntity.ok(customerMapper.map(customerUseCase.filter(PageRequest.of(filterRequest.getPage(), Constants.NUMBER_PAGES, Sort.by(Constants.SORT_ATTRIBUTE)))));
+        return ResponseEntity.ok(customerMapper.map(customerUseCase.filter(customerMapper.map(filterRequest), customerMapper.map(filterRequest.getPage()))));
     }
 
     @Override

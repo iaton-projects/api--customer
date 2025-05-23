@@ -6,6 +6,7 @@ import br.com.iaquant.api.customer.user.datasource.postgres.entity.CustomerTable
 import br.com.iaquant.api.customer.user.datasource.postgres.mapper.CustomerPostgresMapper;
 import br.com.iaquant.api.customer.user.datasource.postgres.repository.CustomerPostgresRepository;
 import br.com.iaquant.api.customer.user.entity.Customer;
+import br.com.iaquant.api.customer.user.entity.Filter;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,21 @@ public class CustomerDataSource implements CustomerRepository {
         this.customerPostgresMapper = customerPostgresMapper;
     }
 
+    @Override
+    @Transactional
+    @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
+    public Page<Customer> filter(Pageable page) {
+        return customerPostgresMapper.map(customerPostgresRepository.findAll(page));
+    }
+
+    @Override
+    @Transactional
+    @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
+    public Page<Customer> filter(Filter filter, Pageable page) {
+        return customerPostgresMapper.map(customerPostgresRepository.findAllByFirstName(filter.getFilter(), page));
+    }
+
+    @Override
     @Transactional
     public Customer save(Customer customer) {
         var customerTable = customerPostgresMapper.map(customer);
@@ -34,29 +50,26 @@ public class CustomerDataSource implements CustomerRepository {
 
     }
 
-
+    @Override
     @ReturnNullObject(ObjectReturnType.OBJECT)
     public Customer findCustomerByEmail(String email) {
         return customerPostgresMapper.map(customerPostgresRepository.findByEmail(email));
     }
 
+    @Override
     @ReturnNullObject(ObjectReturnType.OBJECT)
     public Customer findCustomerByUsername(String username) {
         return customerPostgresMapper.map(customerPostgresRepository.findByUserUsername(username));
     }
 
+    @Override
     @ReturnNullObject(ObjectReturnType.OBJECT)
     public Customer findCustomerById(Long id) {
         Optional<CustomerTable> customerTableOptional = customerPostgresRepository.findById(id);
         return customerPostgresMapper.map(customerTableOptional);
     }
 
-    @Transactional
-    @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
-    public Page<Customer> filter(Pageable page) {
-        return customerPostgresMapper.map(customerPostgresRepository.findAll(page));
-    }
-
+    @Override
     public void delete(Long id) {
         customerPostgresRepository.deleteById(id);
     }

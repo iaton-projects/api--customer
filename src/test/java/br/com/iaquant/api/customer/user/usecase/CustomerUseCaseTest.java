@@ -1,10 +1,7 @@
 package br.com.iaquant.api.customer.user.usecase;
 
 
-import br.com.iaquant.api.customer.user.entity.Address;
-import br.com.iaquant.api.customer.user.entity.Customer;
-import br.com.iaquant.api.customer.user.entity.Status;
-import br.com.iaquant.api.customer.user.entity.User;
+import br.com.iaquant.api.customer.user.entity.*;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,11 +30,22 @@ class CustomerUseCaseTest {
     void shouldListCustomerPageSuccess() {
 
         when(customerRepository.filter(any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
-        var pageList = customerUseCase.filter(PageRequest.of(1, 5, Sort.by("firstName")));
+        var pageList = customerUseCase.listAll(PageRequest.of(1, 5, Sort.by("firstName")));
         assertNotNull(pageList);
         assertEquals(1, pageList.getTotalElements());
         assertEquals(1, pageList.getTotalPages());
     }
+
+    @Test
+    void shouldListCustomerPageFilterSuccess() {
+        when(customerRepository.filter(any(Filter.class), any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
+        var pageList = customerUseCase.filter(getFilter(), PageRequest.of(1, 5, Sort.by("firstName")));
+        assertNotNull(pageList);
+        assertEquals(1, pageList.getTotalElements());
+        assertEquals(1, pageList.getTotalPages());
+    }
+
+
 
     @Test
     void shouldFindCustomerByIdSuccess() {
@@ -76,6 +84,10 @@ class CustomerUseCaseTest {
         var status = customerUseCase.delete(1L);
         assertNotNull(status);
         verify(customerRepository).delete(anyLong());
+    }
+
+    private static Filter getFilter() {
+        return new Filter().setFilter("nome");
     }
 
     private static Customer getCustomer() {
