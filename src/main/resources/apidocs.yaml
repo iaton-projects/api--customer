@@ -18,6 +18,19 @@ paths:
       operationId: getCustomerById
       summary: Obtém as informações
       description: Obtém as informações
+    delete:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+          description: SUCESSO
+      operationId: deleteCustomer
+      summary: Remove as informações
+      description: Remove as informações
     parameters:
       -
         name: id
@@ -89,6 +102,39 @@ paths:
       operationId: saveCustomer
       summary: Salva as informações
       description: Salva as informações
+  /api/customer/list:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCustomerResponse'
+          description: SUCESSO
+      operationId: listAllCustomer
+      summary: Busca todas informações
+      description: Busca todas informações
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterRequest'
+        required: true
+      tags:
+        - Customer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCustomerResponse'
+          description: SUCESSO
+      operationId: filterCustomer
+      summary: Busca todas informações
+      description: Busca todas informações
 components:
   schemas:
     StatusResponse:
@@ -292,3 +338,178 @@ components:
         id: 1
         username: user
         password: password
+    PageableResponse:
+      title: Root Type for PageableResponse
+      description: ''
+      type: object
+      properties:
+        pageNumber:
+          format: int32
+          type: integer
+        pageSize:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/SortResponse'
+          properties:
+            empty:
+              type: boolean
+            sorted:
+              type: boolean
+            unsorted:
+              type: boolean
+        offset:
+          format: int32
+          type: integer
+        unpaged:
+          type: boolean
+        paged:
+          type: boolean
+      example:
+        pageNumber: 0
+        pageSize: 10
+        sort:
+          empty: false
+          sorted: true
+          unsorted: false
+        offset: 0
+        unpaged: false
+        paged: true
+    SortResponse:
+      title: Root Type for SortResponse
+      description: ''
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+      example:
+        empty: false
+        sorted: true
+        unsorted: false
+    ListCustomerResponse:
+      title: Root Type for ListCustomerResponse
+      description: ''
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerResponse'
+        pageable:
+          $ref: '#/components/schemas/PageableResponse'
+          properties:
+            pageNumber:
+              format: int32
+              type: integer
+            pageSize:
+              format: int32
+              type: integer
+            sort:
+              type: object
+              properties:
+                empty:
+                  type: boolean
+                sorted:
+                  type: boolean
+                unsorted:
+                  type: boolean
+            offset:
+              format: int32
+              type: integer
+            unpaged:
+              type: boolean
+            paged:
+              type: boolean
+        last:
+          type: boolean
+        totalPages:
+          format: int32
+          type: integer
+        totalElements:
+          format: int32
+          type: integer
+        first:
+          type: boolean
+        size:
+          format: int32
+          type: integer
+        number:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/SortResponse'
+          properties:
+            empty:
+              type: boolean
+            sorted:
+              type: boolean
+            unsorted:
+              type: boolean
+        numberOfElements:
+          format: int32
+          type: integer
+        empty:
+          type: boolean
+      example:
+        content:
+          -
+            id: 1
+            firstName: Joana
+            lastName: Dark
+            taxId: '12345678900'
+            email: joana.dark@email.com
+            phone: '2133448866'
+            gender: female
+            birthDate: '2000-02-01'
+            user:
+              id: 1
+              username: user
+              password: password
+            address:
+              id: 1
+              zipcode: '12345'
+              address: 123 Main St
+              neighborhood: Central
+              city: Springfield
+              state: IL
+              number: '10'
+              complement: CASA
+        pageable:
+          pageNumber: 0
+          pageSize: 10
+          sort:
+            empty: false
+            sorted: true
+            unsorted: false
+          offset: 0
+          unpaged: false
+          paged: true
+        last: true
+        totalPages: 1
+        totalElements: 4
+        first: true
+        size: 10
+        number: 0
+        sort:
+          empty: false
+          sorted: true
+          unsorted: false
+        numberOfElements: 4
+        empty: false
+    FilterRequest:
+      title: Root Type for FilterRequest
+      description: ''
+      type: object
+      properties:
+        page:
+          format: int32
+          type: integer
+        filter:
+          type: string
+      example:
+        page: 0
+        filter: filtro

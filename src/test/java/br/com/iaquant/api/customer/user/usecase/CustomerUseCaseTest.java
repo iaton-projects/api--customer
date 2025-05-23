@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,6 +28,16 @@ class CustomerUseCaseTest {
 
     @InjectMocks
     CustomerUseCase customerUseCase;
+
+    @Test
+    void shouldListCustomerPageSuccess() {
+
+        when(customerRepository.filter(any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
+        var pageList = customerUseCase.filter(PageRequest.of(1, 5, Sort.by("firstName")));
+        assertNotNull(pageList);
+        assertEquals(1, pageList.getTotalElements());
+        assertEquals(1, pageList.getTotalPages());
+    }
 
     @Test
     void shouldFindCustomerByIdSuccess() {
@@ -57,6 +69,13 @@ class CustomerUseCaseTest {
         verify(customerRepository, times(1)).save(any(Customer.class));
         verify(notificationUseCase, times(1)).sendNotification(any(Customer.class));
         assertNotNull(status);
+    }
+
+    @Test
+    void shouldDeleteCustomerByIdSuccess() {
+        var status = customerUseCase.delete(1L);
+        assertNotNull(status);
+        verify(customerRepository).delete(anyLong());
     }
 
     private static Customer getCustomer() {

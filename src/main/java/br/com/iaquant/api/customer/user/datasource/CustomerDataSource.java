@@ -8,6 +8,8 @@ import br.com.iaquant.api.customer.user.datasource.postgres.repository.CustomerP
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -47,5 +49,15 @@ public class CustomerDataSource implements CustomerRepository {
     public Customer findCustomerById(Long id) {
         Optional<CustomerTable> customerTableOptional = customerPostgresRepository.findById(id);
         return customerPostgresMapper.map(customerTableOptional);
+    }
+
+    @Transactional
+    @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
+    public Page<Customer> filter(Pageable page) {
+        return customerPostgresMapper.map(customerPostgresRepository.findAll(page));
+    }
+
+    public void delete(Long id) {
+        customerPostgresRepository.deleteById(id);
     }
 }

@@ -5,9 +5,11 @@ import br.com.iaquant.api.customer.user.entity.Address;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.entity.User;
 import br.com.iaquant.api.customer.user.exception.ElementNotFoundException;
+import br.com.iaquant.api.customer.user.exception.ListNotFoundException;
 import br.com.iaquant.api.customer.user.handler.ControllerErrorHandler;
 import br.com.iaquant.api.customer.user.mapper.CustomerMapper;
 import br.com.iaquant.api.customer.user.openapi.model.domain.CustomerRequest;
+import br.com.iaquant.api.customer.user.openapi.model.domain.FilterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.iaquant.api.customer.user.entity.Status;
 import br.com.iaquant.api.customer.user.usecase.CustomerUseCase;
@@ -17,6 +19,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +28,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDate;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -52,6 +58,66 @@ class CustomerApiImplTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new ControllerErrorHandler())
                 .build();
+    }
+
+    @Test
+    void shouldReturnHttp200_ListCustomer() throws Exception {
+        when(customerUseCase.filter(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(getCustomer())));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/api/customer/list")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
+
+    @Test
+    void shouldReturnHttp204_ListCustomer() throws Exception {
+        when(customerUseCase.filter(any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/api/customer/list")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isNoContent());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
+
+    @Test
+    void shouldReturnHttp200_FilterCustomer() throws Exception {
+        when(customerUseCase.filter(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(getCustomer())));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/api/customer/list")
+                        .content(new ObjectMapper().writeValueAsString(getFilter()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
+
+
+
+    @Test
+    void shouldReturnHttp204_FilterCustomer() throws Exception {
+        when(customerUseCase.filter(any(PageRequest.class))).thenThrow(new ListNotFoundException("Erro"));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/api/customer/list")
+                        .content(new ObjectMapper().writeValueAsString(getFilter()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isNoContent());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
     }
 
     @Test
@@ -154,6 +220,21 @@ class CustomerApiImplTest {
         verify(customerMetrics, times(1)).incrementCustomerSuccessCount();
     }
 
+    @Test
+    void shouldReturnHttp200_DeleteCustomer() throws Exception {
+        when(customerUseCase.delete(anyLong())).thenReturn(new Status(0, ""));
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .delete("/api/customer/{id}", 3L)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .isOk());
+
+        verify(customerMetrics, times(0)).incrementCustomerSuccessCount();
+    }
+
+
     private CustomerRequest getCustomerRequest() {
         var informacaoRequest = new CustomerRequest();
         informacaoRequest.setFirstName("NOME");
@@ -184,6 +265,14 @@ class CustomerApiImplTest {
                         .setCity("Rio de Janeiro")
                         .setState("RJ")
                         .setComplement("CASA"));
+    }
+
+
+    private static FilterRequest getFilter() {
+        var filtroBusca = new FilterRequest();
+        filtroBusca.setPage(1);
+        filtroBusca.setFilter("nome");
+        return filtroBusca;
     }
 
 }

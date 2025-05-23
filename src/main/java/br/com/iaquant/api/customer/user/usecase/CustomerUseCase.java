@@ -3,6 +3,8 @@ package br.com.iaquant.api.customer.user.usecase;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.entity.Status;
 import br.com.iaquant.api.customer.user.repository.CustomerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -37,4 +39,12 @@ public class CustomerUseCase {
         return customerRepository.findCustomerByUsername(username);
     }
 
+    public Status delete(Long id) {
+        customerRepository.delete(id);
+        return new Status(0,"SUCESSO");
+    }
+
+    public Page<Customer> filter(Pageable pageRequest) {
+        return customerRepository.filter(pageRequest);
+    }
 }

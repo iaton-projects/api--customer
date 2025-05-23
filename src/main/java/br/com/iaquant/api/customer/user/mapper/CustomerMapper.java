@@ -3,10 +3,12 @@ package br.com.iaquant.api.customer.user.mapper;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.openapi.model.domain.CustomerRequest;
 import br.com.iaquant.api.customer.user.openapi.model.domain.CustomerResponse;
+import br.com.iaquant.api.customer.user.openapi.model.domain.ListCustomerResponse;
 import br.com.iaquant.api.customer.user.openapi.model.domain.StatusResponse;
 import br.com.iaquant.api.customer.user.entity.Status;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.springframework.data.domain.Page;
 
 @Mapper(componentModel= MappingConstants.ComponentModel.SPRING)
 public interface CustomerMapper {
@@ -16,6 +18,8 @@ public interface CustomerMapper {
     Customer map(CustomerRequest request);
 
     StatusResponse map(Status response);
+
+    ListCustomerResponse map(Page<Customer> response);
 
 
 }

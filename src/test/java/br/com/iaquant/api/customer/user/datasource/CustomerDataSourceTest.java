@@ -9,19 +9,21 @@ import br.com.iaquant.api.customer.user.datasource.postgres.mapper.CustomerPostg
 import br.com.iaquant.api.customer.user.datasource.postgres.repository.CustomerPostgresRepository;
 import br.com.iaquant.api.customer.user.entity.Customer;
 import br.com.iaquant.api.customer.user.exception.ElementNotFoundException;
+import br.com.iaquant.api.customer.user.exception.ListNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -39,6 +41,23 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
     @BeforeEach
     void setup() {
         customerDataSource = setupDataSourceTest(customerDataSource);
+    }
+
+
+    @Test
+    void shouldFilterCustomerSuccess() {
+        when(customerPostgresRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
+        var pageList = customerDataSource.filter(PageRequest.of(1, 5, Sort.by("firstName")));
+        assertNotNull(pageList);
+        assertEquals(1, pageList.getTotalElements());
+        assertEquals(1, pageList.getTotalPages());
+    }
+
+
+    @Test
+    void shouldThrow_ListNotFoundException_CustomerByIdNull() {
+        when(customerPostgresRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
+        assertThrows(ListNotFoundException.class, () -> customerDataSource.filter(PageRequest.of(1, 5, Sort.by("firstName"))));
     }
 
     @Test
@@ -85,6 +104,12 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
         var customerSaved = customerDataSource.save(new Customer());
         assertNotNull(customerSaved);
         verify(customerPostgresRepository, times(1)).save(any(CustomerTable.class));
+    }
+
+    @Test
+    void shouldDeleteCustomerSuccess() {
+        customerDataSource.delete(1L);
+        verify(customerPostgresRepository, times(1)).deleteById(any(Long.class));
     }
 
     private static CustomerTable getCustomer() {
