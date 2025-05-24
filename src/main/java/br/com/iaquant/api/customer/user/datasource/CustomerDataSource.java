@@ -28,17 +28,15 @@ public class CustomerDataSource implements CustomerRepository {
     }
 
     @Override
-    @Transactional
     @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
     public Page<Customer> filter(Pageable page) {
         return customerPostgresMapper.map(customerPostgresRepository.findAll(page));
     }
 
     @Override
-    @Transactional
     @ReturnNullObject(ObjectReturnType.SPRING_PAGE)
     public Page<Customer> filter(Filter filter, Pageable page) {
-        return customerPostgresMapper.map(customerPostgresRepository.findAllByFirstName(filter.getFilter(), page));
+        return customerPostgresMapper.map(customerPostgresRepository.findAllByUsername(filter.getFilter(), page));
     }
 
     @Override

@@ -62,7 +62,7 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
 
     @Test
     void shouldFilterCustomerFirstNameSuccess() {
-        when(customerPostgresRepository.findAllByFirstName(anyString(), any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
+        when(customerPostgresRepository.findAllByUsername(anyString(), any(Pageable.class))).thenReturn(new PageImpl<>(Arrays.asList(getCustomer())));
         var pageList = customerDataSource.filter(getFilter(), PageRequest.of(1, 5, Sort.by("firstName")));
         assertNotNull(pageList);
         assertEquals(1, pageList.getTotalElements());
@@ -71,7 +71,7 @@ class CustomerDataSourceTest extends AbstractDataSourceTest {
 
     @Test
     void shouldThrow_ListNotFoundException_FilterCustomerrFirstNameNull() {
-        when(customerPostgresRepository.findAllByFirstName(anyString(), any(Pageable.class))).thenReturn(Page.empty());
+        when(customerPostgresRepository.findAllByUsername(anyString(), any(Pageable.class))).thenReturn(Page.empty());
         assertThrows(ListNotFoundException.class, () -> customerDataSource.filter(getFilter(), PageRequest.of(1, 5, Sort.by("firstName"))));
     }
 

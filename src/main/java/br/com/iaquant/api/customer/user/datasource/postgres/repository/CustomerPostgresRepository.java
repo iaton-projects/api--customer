@@ -14,8 +14,13 @@ public interface CustomerPostgresRepository extends JpaRepository<CustomerTable,
 
     CustomerTable findByUserUsername(String username);
 
-    @Query("select c from #{#entityName} c where c.firstName = :firstName")
-    Page<CustomerTable> findAllByFirstName(@Param("firstName") String firstName, Pageable page);
+    @Query("""
+        SELECT c FROM CustomerTable c
+        JOIN c.user u
+        WHERE (:username IS NULL OR :username = '' 
+        OR LOWER(u.username) LIKE LOWER(CONCAT('%', :username, '%')))
+    """)
+    Page<CustomerTable> findAllByUsername(@Param("username") String username, Pageable page);
 
 }
 

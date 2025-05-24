@@ -42,4 +42,11 @@ public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(status, HttpStatus.EXPECTATION_FAILED);
     }
 
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Status> handleGenericError(Exception exception, WebRequest request) {
+        var status = new Status(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
+        LOGGER.error(exception.getMessage());
+        return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
