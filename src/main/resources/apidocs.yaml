@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: api--customer-user
+  title: api--customer
   version: 1.0.0
   description: Api responsavel por manter os dados do Cliente
 paths:

@@ -1,4 +1,4 @@
-@namespace("br.com.iaquant.service.notification.avro")
+@namespace("br.com.iaton.service.notification.avro")
 protocol NotificationAvroIDL {
 
 	record NotificationAvro {

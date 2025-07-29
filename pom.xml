@@ -8,7 +8,7 @@
 		<version>3.2.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.iaquant.api</groupId>
+	<groupId>br.com.iaton.api</groupId>
 	<artifactId>api--customer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api--customer</name>
@@ -214,8 +214,8 @@
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/apidocs.yaml</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>br.com.iaquant.api.customer.user.openapi.controller</apiPackage>
-							<modelPackage>br.com.iaquant.api.customer.user.openapi.model.domain</modelPackage>
+							<apiPackage>br.com.iaton.api.customer.openapi.controller</apiPackage>
+							<modelPackage>br.com.iaton.api.customer.openapi.model.domain</modelPackage>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<output>${project.build.directory}/generated-sources</output>
 							<generateApiTests>false</generateApiTests>

@@ -58,7 +58,7 @@ info:
     name: "@project.name@"
     version: "@project.version@"
     description: "@project.description@ "
-    base-package: "br.com.iaquant.api.customer"
+    base-package: "br.com.iaton.api.customer"
 
 management:
   server:
