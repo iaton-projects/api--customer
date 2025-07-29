@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.iaquant.api</groupId>
-	<artifactId>api--customer-user</artifactId>
+	<artifactId>api--customer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api--customer-user</name>
+	<name>api--customer</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
