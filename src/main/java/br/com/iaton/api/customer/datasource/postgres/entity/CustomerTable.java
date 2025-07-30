@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "`customer`")
 public class CustomerTable {
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")

@@ -2,7 +2,6 @@ package br.com.iaton.api.customer.usecase;
 
 
 import br.com.iaton.api.customer.entity.*;
-import br.com.iaton.api.customer.entity.*;
 import br.com.iaton.api.customer.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +11,10 @@ import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 import java.util.Arrays;
+
+import static br.com.iaton.api.customer.mock.CustomerMock.getCustomer;
+import static br.com.iaton.api.customer.mock.FilterMock.getFilter;
+import static br.com.iaton.api.customer.mock.StatusMock.getStatusSuccess;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -72,7 +75,7 @@ class CustomerUseCaseTest {
     @Test
     void shouldSaveCustomerSuccess() {
         when(customerRepository.save(any(Customer.class))).thenReturn(new Customer().setId(1L));
-        when(notificationUseCase.sendNotification(any(Customer.class))).thenReturn(new Status(0, "SUCESSO"));
+        when(notificationUseCase.sendNotification(any(Customer.class))).thenReturn(getStatusSuccess());
         var customer = getCustomer();
         var status = customerUseCase.save(customer);
         verify(customerRepository, times(1)).save(any(Customer.class));
@@ -87,32 +90,6 @@ class CustomerUseCaseTest {
         verify(customerRepository).delete(anyLong());
     }
 
-    private static Filter getFilter() {
-        return new Filter().setFilter("nome");
-    }
 
-    private static Customer getCustomer() {
-        return new Customer()
-                .setId(1L)
-                .setFirstName("John")
-                .setLastName("Doe")
-                .setEmail("johndoe@example.com")
-                .setPhone("+55 21 98765-4321")
-                .setTaxId("123.456.789-00")
-                .setBirthDate(LocalDate.of(1990, 5, 15))
-                .setGender("Male")
-                .setUser(new User()
-                        .setId(1L)
-                        .setUsername("user")
-                        .setPassword("password"))
-                .setAddress(new Address()
-                        .setId(1L)
-                        .setZipCode("20000-000")
-                        .setAddress("Fake street")
-                        .setNeighborhood("Centro")
-                        .setCity("Rio de Janeiro")
-                        .setState("RJ")
-                        .setComplement("CASA"));
-    }
 
 }

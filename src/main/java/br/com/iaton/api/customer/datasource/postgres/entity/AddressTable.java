@@ -3,7 +3,7 @@ package br.com.iaton.api.customer.datasource.postgres.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "address")
+@Table(name = "`address`")
 public class AddressTable {
 
         @Id
