@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static br.com.iaton.api.customer.mock.CustomerMock.getCustomer_SendNotification;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +25,7 @@ class NotificationUseCaseTest {
 
     @Test
     void shouldSendNotificationSuccess() {
-        var customer = notificationUseCase.sendNotification(new Customer().setId(1L).setFirstName("name").setLastName("last name"));
+        var customer = notificationUseCase.sendNotification(getCustomer_SendNotification());
         verify(notificationRepository, times(1)).sendNotification(any(Notification.class));
         assertNotNull(customer);
     }
