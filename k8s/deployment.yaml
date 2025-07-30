@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api--customer-user
-  namespace: iaquant
+  name: api--customer
+  namespace: iaton
 spec:
   selector:
     matchLabels:
-      app: api--customer-user
+      app: api--customer
   template: 
     metadata:
-        name: api--customer-user
+        name: api--customer
         labels:
-          app: api--customer-user
+          app: api--customer
     spec:
         containers:
-          - name: api--customer-user
+          - name: api--customer
             image: $dck-accountid/$dck-repository:api--customer-user-$githash
             envFrom:
               - configMapRef:
-                  name: api--customer-user-cm
+                  name: api--customer-cm
             ports:
               - containerPort: 5000
               - containerPort: 9190

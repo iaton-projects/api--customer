@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api--customer-user-cm
-  namespace: iaquant
+  name: api--customer-cm
+  namespace: iaton
 data:
   SPRING_PROFILES_ACTIVE: "dev,jsonlog,logbook"
   API_KEY_SECURITY: "MmUyYTVjNGQtODViNy00M2Q2LWEwN2ItNTZlYTUzNGM2YTRh"
