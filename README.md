@@ -33,7 +33,7 @@ Collection estão na raiz do repositório.
 
 
 ```
-api--customer-userTable.postman_collection.json
+api--customer.postman_collection.json
 ```
 
 
@@ -45,7 +45,7 @@ Basta executar o comando maven install
 Para rodar, vá na pasta target onde tem o artefato gerado e execute o comando:
 
 ```
-java -jar api--customer-userTable-0.0.1-SNAPSHOT.jar
+java -jar api--customer-0.0.1-SNAPSHOT.jar
 ```
 
 ## Rodando via Docker (Precisa ter o Docker Instalado)
@@ -61,21 +61,21 @@ docker-compose up
 Execute o comando para gerar a imagem via Docker
 
 ```
-docker build -t api--customer-user .
+docker build -t api--customer .
 ```
 
 Para executar o container, rode o comando abaixo:
 
 ```
-docker run --name api--customer-user \
-      --network iaquant-network \  
+docker run --name api--customer \
+      --network iaton-network \  
       -p 5000:5000 \
       -e SPRING_PROFILES_ACTIVE=dev,jsonlog,logbook
       -e POSTGRES_HOST=<IP DO BANCO>
       -e POSTGRES_DATABASE=<DATABASE DO BANCO>
       -e POSTGRES_USERNAME=<USUARIO DE BANCO>
       -e POSTGRES_PASSWORD=<SENHA DO BANCO>
-      api--customer-user:latest
+      api--customer:latest
       
 ```
 
