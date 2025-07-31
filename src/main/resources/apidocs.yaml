@@ -351,13 +351,6 @@ components:
           type: integer
         sort:
           $ref: '#/components/schemas/SortResponse'
-          properties:
-            empty:
-              type: boolean
-            sorted:
-              type: boolean
-            unsorted:
-              type: boolean
         offset:
           format: int32
           type: integer
@@ -401,29 +394,6 @@ components:
             $ref: '#/components/schemas/CustomerResponse'
         pageable:
           $ref: '#/components/schemas/PageableResponse'
-          properties:
-            pageNumber:
-              format: int32
-              type: integer
-            pageSize:
-              format: int32
-              type: integer
-            sort:
-              type: object
-              properties:
-                empty:
-                  type: boolean
-                sorted:
-                  type: boolean
-                unsorted:
-                  type: boolean
-            offset:
-              format: int32
-              type: integer
-            unpaged:
-              type: boolean
-            paged:
-              type: boolean
         last:
           type: boolean
         totalPages:
@@ -442,13 +412,6 @@ components:
           type: integer
         sort:
           $ref: '#/components/schemas/SortResponse'
-          properties:
-            empty:
-              type: boolean
-            sorted:
-              type: boolean
-            unsorted:
-              type: boolean
         numberOfElements:
           format: int32
           type: integer
