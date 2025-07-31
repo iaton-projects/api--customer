@@ -28,6 +28,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDate;
 import java.util.List;
 
+import static br.com.iaton.api.customer.mock.CustomerMock.getCustomer;
+import static br.com.iaton.api.customer.mock.CustomerMock.getCustomerRequest;
+import static br.com.iaton.api.customer.mock.FilterMock.getFilter;
+import static br.com.iaton.api.customer.mock.FilterMock.getFilterRequest;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -91,7 +95,7 @@ class CustomerApiImplTest {
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/customer/list")
-                        .content(new ObjectMapper().writeValueAsString(getFilter()))
+                        .content(new ObjectMapper().writeValueAsString(getFilterRequest()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers
                         .status()
@@ -107,7 +111,7 @@ class CustomerApiImplTest {
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/customer/list")
-                        .content(new ObjectMapper().writeValueAsString(getFilter()))
+                        .content(new ObjectMapper().writeValueAsString(getFilterRequest()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers
                         .status()
@@ -231,44 +235,6 @@ class CustomerApiImplTest {
     }
 
 
-    private CustomerRequest getCustomerRequest() {
-        var informacaoRequest = new CustomerRequest();
-        informacaoRequest.setFirstName("NOME");
-        informacaoRequest.setLastName("SOBRENOME");
-        return informacaoRequest;
 
-    }
-
-    private static Customer getCustomer() {
-        return new Customer()
-                .setId(1L)
-                .setFirstName("John")
-                .setLastName("Doe")
-                .setEmail("johndoe@example.com")
-                .setPhone("+55 21 98765-4321")
-                .setTaxId("123.456.789-00")
-                .setBirthDate(LocalDate.of(1990, 5, 15))
-                .setGender("Male")
-                .setUser(new User()
-                        .setId(1L)
-                        .setUsername("user")
-                        .setPassword("password"))
-                .setAddress(new Address()
-                        .setId(1L)
-                        .setZipCode("20000-000")
-                        .setAddress("Fake street")
-                        .setNeighborhood("Centro")
-                        .setCity("Rio de Janeiro")
-                        .setState("RJ")
-                        .setComplement("CASA"));
-    }
-
-
-    private static FilterRequest getFilter() {
-        var filtroBusca = new FilterRequest();
-        filtroBusca.setPage(1);
-        filtroBusca.setFilter("nome");
-        return filtroBusca;
-    }
 
 }

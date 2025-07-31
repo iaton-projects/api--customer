@@ -4,6 +4,7 @@ import br.com.iaton.api.customer.entity.Address;
 import br.com.iaton.api.customer.entity.Customer;
 import br.com.iaton.api.customer.entity.Filter;
 import br.com.iaton.api.customer.entity.User;
+import br.com.iaton.api.customer.openapi.model.domain.CustomerRequest;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,14 @@ public class CustomerMock {
 
     public static Customer getCustomer_SendNotification() {
         return new Customer().setId(1L).setFirstName("name").setLastName("last name");
+    }
+
+    public static CustomerRequest getCustomerRequest() {
+        var informacaoRequest = new CustomerRequest();
+        informacaoRequest.setFirstName("NOME");
+        informacaoRequest.setLastName("SOBRENOME");
+        return informacaoRequest;
+
     }
 
 
