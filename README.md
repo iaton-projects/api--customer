@@ -71,10 +71,13 @@ docker run --name api--customer \
       --network iaton-network \  
       -p 5000:5000 \
       -e SPRING_PROFILES_ACTIVE=dev,jsonlog,logbook
+      -e KAFKA_BOOTSTRAP_SERVER=<URL DO KAFKA>
+      -e KAFKA_SCHEMA_REGISTRY=<URL DO SCHEMA REGISTRY DO KAFKA>      
       -e POSTGRES_HOST=<IP DO BANCO>
       -e POSTGRES_DATABASE=<DATABASE DO BANCO>
       -e POSTGRES_USERNAME=<USUARIO DE BANCO>
       -e POSTGRES_PASSWORD=<SENHA DO BANCO>
+      -e OTEL_EXPORTER_OTLP_ENDPOINT=<URL DO OPEN TELEMETRY>
       api--customer:latest
       
 ```
